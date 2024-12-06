@@ -17,4 +17,12 @@ test.describe("Página de Login", () => {
         await paginaLogin.fazerLogin('invalido@gmail.com', '123456')
         await paginaLogin.estaMostrandoMensagemDeErro('Você não está autorizado a acessar este recurso')
     })
-})
+
+    test("Não deve realizar login com formato de email inválido", async ({ page }) => {
+        const paginaLogin = new PaginaLogin(page)
+
+        await paginaLogin.visitar()
+        await paginaLogin.preencherEmailESenha('invalido', '')
+        await paginaLogin.estaMostrandoMensagemDeErro('E-mail inválido')
+    })
+})  

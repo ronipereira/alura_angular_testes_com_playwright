@@ -27,6 +27,11 @@ export default class PaginaLogin {
         await this.botaoAcessarConta.click()
     }
 
+    async preencherEmailESenha(email: string, senha: string) {
+        await this.inputEmail.fill(email)
+        await this.inputSenha.fill(senha)
+    }
+
     async loginFeitoComSucesso() {
         await expect(this.page).toHaveURL('/home')
     }
