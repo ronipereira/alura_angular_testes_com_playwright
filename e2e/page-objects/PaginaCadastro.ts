@@ -1,4 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test"
+import { Genero } from "../operacoes/gerarPerfil";
+import { formatarDataParaForm } from "../operacoes/datas";
 
 export default class PaginaCadastro {
     private readonly page: Page;
@@ -23,6 +25,25 @@ export default class PaginaCadastro {
         
         this.inputNome = page.getByTestId('form-base-input-nome');
         this.inputDataNascimento = page.getByTestId('form-base-input-data-nascimento');
+
+        const radioGeneroFeminino = page 
+            .getByTestId('form-base-radio-genero-feminino')
+            .getByLabel('Feminino')
+
+        const radioGeneroMasculino = page 
+            .getByTestId('form-base-radio-genero-masculino')
+            .getByLabel('Masculino')
+
+        const radioGeneroOutros = page 
+            .getByTestId('form-base-radio-genero-nao-informar')
+            .getByLabel('Prefiro não informar')
+
+        this.radiosGenero = {
+            [Genero.FEMININO]: radioGeneroFeminino,
+            [Genero.MASCULINO]: radioGeneroMasculino,
+            [Genero.OUTRO]: radioGeneroOutros
+        }
+
         this.inputCpf = page.getByTestId('form-base-input-cpf');
         this.inputCidade = page.getByTestId('form-base-input-cidade');
         this.inputTelefone = page.getByTestId('form-base-input-telefone');
@@ -46,6 +67,59 @@ export default class PaginaCadastro {
         await this.page.goto('/')
         await this.botaoVisitarPaginaCadastro.click()
         await expect(this.page).toHaveURL('/auth/cadastro')
+    }
+
+    async preencherNomeCompleto(nomeCompleto: string) {
+        await this.inputNome.fill(nomeCompleto)
+    }
+
+    async preencherDataNascimento(dataNascimento: Date) {
+        const dataFormatada = formatarDataParaForm(dataNascimento);
+        await this.inputDataNascimento.fill(dataFormatada);
+    }
+
+    async selecionarGenero(genero: Genero) {
+        const radioGenero = this.radiosGenero[genero]
+        await radioGenero.check()
+    }
+
+    async preencherCpf(cpf: string) {
+        await this.inputCpf.fill(cpf)
+    }
+
+    async preencherCidade(cidade: string) {
+        await this.inputCidade.fill(cidade)
+    }
+
+    async preencherEstado(estado: string) {
+        await this.inputEstado.fill(estado)
+        await this.inputEstado.press('Enter')
+    }
+
+    async preencherTelefone(telefone: string) {
+        await this.inputTelefone.fill(telefone)
+    }
+
+    async preencherEmail(email: string) {
+        await this.inputEmail.fill(email)
+        await this.inputConfirmarEmail.fill(email)
+    }
+
+    async preencherSenha(senha: string) {
+        await this.inputSenha.fill(senha)
+        await this.inputConfirmarSenha.fill(senha)
+    }
+
+    async confirmarTermos() {
+        await this.checkboxTermos.check();
+    }
+
+    async clicarBotaoCadastrarUsuario() {
+        await this.botaoSubmeterForm.click()
+    }
+
+    async cadastroFeitoComSucesso() {
+        await expect(this.page).toHaveURL('/auth/login')
     }
 
     async estaMostrandoMensagemDeErro(mensagem: string) {
