@@ -1,6 +1,10 @@
 import { test } from '../setup/fixtures'
 
 test.describe('Buscar Passagens', () => {
+  test.beforeEach(async ( { paginaPrincipal }  ) => {
+    await paginaPrincipal.visitar()
+  })
+
   test('Deve buscar passagem de somente ida', async ({ paginaPrincipal }) => {
     await paginaPrincipal.definirSomenteIda()
     await paginaPrincipal.acessarModalPassageiros()

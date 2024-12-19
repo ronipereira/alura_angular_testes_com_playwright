@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test"
-import { Genero } from "../operacoes/gerarPerfil";
+import { Genero, Perfil } from "../operacoes/gerarPerfil";
 import { formatarDataParaForm } from "../operacoes/datas";
 
 export default class PaginaCadastro {
@@ -116,6 +116,20 @@ export default class PaginaCadastro {
 
     async clicarBotaoCadastrarUsuario() {
         await this.botaoSubmeterForm.click()
+    }
+
+    async cadastrarUsuario(usuario: Perfil) {
+        await this.preencherNomeCompleto(usuario.nome)
+        await this.preencherDataNascimento(usuario.dataNascimento)
+        await this.selecionarGenero(usuario.genero)
+        await this.preencherCpf(usuario.cpf)
+        await this.preencherCidade(usuario.cidade)
+        await this.preencherEstado(usuario.estado)
+        await this.preencherTelefone(usuario.telefone)
+        await this.preencherEmail(usuario.email)
+        await this.preencherSenha(usuario.senha)
+        await this.confirmarTermos()
+        await this.clicarBotaoCadastrarUsuario()
     }
 
     async cadastroFeitoComSucesso() {
