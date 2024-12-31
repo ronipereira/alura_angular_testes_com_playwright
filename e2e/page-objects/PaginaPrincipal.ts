@@ -126,10 +126,22 @@ export default class PaginaPrincipal {
         }
     }
 
-    async definirPassageirosBesbes(quantidade: number) {
+    async definirPassageirosBebes(quantidade: number) {
         for (let i = 0; i < quantidade; i++) {
             await this.botaoIncrementarBebes.click()
         }
+    }
+
+    async definirCategoriaEconomica() {
+        await this.botaoCategoriaEconomica.click()
+    }
+
+    async definirCategoriaExecutiva() {
+        await this.botaoCategoriaExecutiva.click()
+    }
+
+    async abrirModalPassageiros() {
+        await this.botaoModalPassageiros.click()
     }
 
     async fecharModalPassageiros() {
@@ -162,5 +174,51 @@ export default class PaginaPrincipal {
         await expect(this.containerOrigem).toContainText(origem)
         await expect(this.containerDestino).toContainText(destino)
         await expect(this.botaoComprar).toBeVisible()
-    }    
+    } 
+    
+    async configurarPassageiros(adultos: number, criancas: number, bebes: number) {
+        await this.acessarModalPassageiros();
+        await this.definirPassageirosAdultos(adultos);
+        await this.definirPassageirosCriancas(criancas);
+        await this.definirPassageirosBebes(bebes);
+        await this.fecharModalPassageiros();
+    }
+
+    async mockarRespostaBuscaPassagens() {
+        await this.page.route('*/**/passagem/search*', async (rota) => {
+            const json = {
+                paginaAtual: "1",
+                ultimaPagina: 1,
+                total: 1,
+                precoMin: 20,
+                precoMax: 5000,
+                resultado: [
+                    {
+                        id: 2,
+                        tipo: "Executiva",
+                        precoIda: 3000,
+                        precoVolta: 2700,
+                        taxaEmbarque: 175,
+                        conexoes: 2,
+                        tempoVoo: 6,
+                        origem: {
+                            id: 11,
+                            nome: "Paraíba",
+                            sigla: "PB"
+                        },
+                        destino: {
+                            id: 19,
+                            nome: "Roraima",
+                            sigla: "RR"
+                        },
+                        companhia: {
+                            id: 4,
+                            nome: "Latam"
+                        }
+                    }
+                ]
+            };
+            await rota.fulfill({ json });
+        });
+    }
 }

@@ -1,45 +1,48 @@
-# alura_angular_testes_com_playwright
+# Alura Angular Testes com Playwright
 
-Curso Alura: Angular: escreva testes end-to-end com Playwright
-
-## Descrição
-
-Este projeto é parte do curso da Alura sobre testes end-to-end utilizando Playwright com Angular. O objetivo é ensinar como escrever testes automatizados para aplicações web, garantindo a qualidade e a funcionalidade do software.
-
-## Estrutura do Projeto
-
-- **e2e/**: Contém os testes end-to-end.
-  - **operacoes/**: Funções utilitárias e geração de dados de teste.
-  - **page-objects/**: Objetos de página que encapsulam a interação com elementos da UI.
-  - **setup/**: Configurações e fixtures para os testes.
-  - **specs/**: Especificações dos testes.
-- **playwright-report/**: Relatórios gerados pelo Playwright.
-- **test-results/**: Resultados dos testes.
-- **tests-examples/**: Exemplos de testes fornecidos pelo Playwright.
+Este projeto é um exemplo de como utilizar o Playwright para realizar testes em uma aplicação Angular.
 
 ## Pré-requisitos
 
 - Node.js
-- npm
+- npm ou yarn
+- Angular CLI
 
 ## Instalação
 
 1. Clone o repositório:
-    ```sh
-    git clone https://github.com/ronipereira/alura_angular_testes_com_playwright.git
+    ```bash
+    git clone https://github.com/seu-usuario/alura_angular_testes_com_playwright.git
     ```
 2. Navegue até o diretório do projeto:
-    ```sh
+    ```bash
     cd alura_angular_testes_com_playwright
     ```
 3. Instale as dependências:
-    ```sh
+    ```bash
     npm install
+    ```
+    ou
+    ```bash
+    yarn install
     ```
 
 ## Executando os Testes
 
-Para executar todos os testes end-to-end:
-```sh
-npm run e2e
+Para executar os testes, utilize o comando:
+```bash
+npx playwright test
 ```
+
+## Estrutura do Projeto
+
+- `src/`: Contém o código fonte da aplicação Angular.
+- `tests/`: Contém os testes automatizados utilizando Playwright.
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
